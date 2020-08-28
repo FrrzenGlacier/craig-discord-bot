@@ -30,27 +30,32 @@ for cog in cogs:
 	eou.log(text=("%s loaded" % cog.title()))
 
 
+# define a function for checking if a user is an owner of the bot
 async def is_owner(ctx):
 	return ctx.author.id in [184474965859368960, 696087051619008612]
 
 
+# when connected, say so
 @bot.event
 async def on_connect():
 	eou.log(text="Connected")
 
 
+# when disconnected, say so
 @bot.event
 async def on_disconnect():
 	eou.log(text="Disconnected")
 
 
+# when ready, say so, and set game activity
 @bot.event
 async def on_ready():
 	eou.log(text="Ready")
-	game = discord.Activity(type=discord.ActivityType.listening, name="2MFT")
+	game = discord.Activity(type=discord.ActivityType.listening, name="c.help")
 	await bot.change_presence(status=discord.Status.online, activity=game)
 
 
+# c.reload [cog] - reload one or more of the bots cogs
 @bot.command(name="reload", brief="Reload one or all of the bots cogs")
 @commands.check(is_owner)
 async def _reload(ctx, cog="all"):
@@ -87,6 +92,7 @@ async def _reload(ctx, cog="all"):
 		eou.log(text="Reloaded %s" % cog.title(), ctx=ctx)
 
 
+# if reload gets an error, say that the invoker wasnt an owner of the bot
 @_reload.error
 async def _reload_error(ctx, error):
 	if isinstance(error, commands.CheckFailure):
@@ -100,6 +106,7 @@ async def _reload_error(ctx, error):
 		eou.log(text="Attempted to reload cog(s) - Missing permissions", ctx=ctx)
 
 
+# c.ping - just check if craig is online
 @bot.command(brief="Check if the bot is online")
 async def ping(ctx):
 	embed = eou.makeEmbed(title="Pong!", description="Craig is online.")
@@ -108,5 +115,6 @@ async def ping(ctx):
 	eou.log(text="Pinged the bot", ctx=ctx)
 
 
+# load craig from a text file
 with open("T:/all 2/tokens/craig.txt", "r") as token:
 	bot.run(token.read())
