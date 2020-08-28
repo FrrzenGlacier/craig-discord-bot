@@ -124,9 +124,6 @@ class DND(commands.Cog):
 			request = r.get(url="https://www.dnd5eapi.co%s" % result["url"]).json()
 
 
-			output_string = "```json\n" + json.dumps(request, indent=4) + "```"
-			# if len(output_string) > 2000:
-			# 	output_string = output_string[:1750] + "...```\n\n(longer than 2000 characters)"
 			output_string = ""
 			embed = eou.makeEmbed(title=request["name"], description=output_string)
 
@@ -137,6 +134,11 @@ class DND(commands.Cog):
 					embed.add_field(name=stat.replace("_", " ").title(), value=request[stat], inline=True)
 				embed.add_field(name="Hit Points", value="%s (%s)" % (request["hit_points"], request["hit_dice"]))
 				embed.add_field(name="Speed", value="\n".join(["%s %sing" % (request["speed"][key], key) for key in request["speed"]]))
+
+			else:
+				output_string = "```json\n" + json.dumps(request, indent=4) + "```"
+				if len(output_string) > 2000:
+					output_string = output_string[:1750] + "...```\n\n(longer than 2000 characters)"
 
 
 			embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
