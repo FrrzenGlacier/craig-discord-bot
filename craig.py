@@ -115,6 +115,15 @@ async def ping(ctx):
 	eou.log(text="Pinged the bot", ctx=ctx)
 
 
+# c.invite - get an invite link for craig
+@bot.command(brief="Get an invite link fron Craig")
+async def invite(ctx):
+	embed = eou.makeEmbed(title="Want to add me?", description="[Invite me with this link!](https://discord.com/api/oauth2/authorize?client_id=748956804582735992&permissions=0&scope=bot)")
+	embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+	await ctx.send(embed=embed)
+	eou.log(text="Got an invite link", ctx=ctx)
+
+
 # load craig from a text file
 with open("T:/all 2/tokens/craig.txt", "r") as token:
 	bot.run(token.read())

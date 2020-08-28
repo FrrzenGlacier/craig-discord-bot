@@ -8,7 +8,7 @@ import os
 def clear(): return os.system("cls")
 
 
-def makeEmbed(title="TITLE", description="DESCRIPTION", color=0xffadb6):
+def makeEmbed(title="TITLE", description="DESCRIPTION", color=0xbefc53):
 	return discord.Embed(title=title, description=description, color=color)
 
 
